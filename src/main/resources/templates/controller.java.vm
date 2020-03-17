@@ -28,36 +28,35 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 #end
 
-#set($serviceVarName = ${table.name}+"Service")
-private final ${table.serviceName} ${serviceVarName};
+    #set($serviceVarName = ${table.name}+"Service")
+    private final ${table.serviceName} ${serviceVarName};
 
-public ${table.controllerName}(${table.serviceName} ${serviceVarName}){
+    public ${table.controllerName}(${table.serviceName} ${serviceVarName}) {
         this.${serviceVarName} = ${serviceVarName};
-        }
+    }
 
-@GetMapping("list")
-public List<${table.entityName}> list(){
+    @GetMapping("list")
+    public List<${table.entityName}> list() {
         return ${serviceVarName}.list();
-        }
+    }
 
-@GetMapping("{id}")
-public ${table.entityName} getById(@PathVariable String id){
+    @GetMapping("{id}")
+    public ${table.entityName} getById(@PathVariable String id) {
         return ${serviceVarName}.getById(id);
-        }
+    }
 
-@PutMapping
-public void create(@Validated(CreateAction.class) ${table.entityName} ${table.name}){
-    ${serviceVarName}.save(${table.name});
-        }
+    @PutMapping
+    public void create(@Validated(CreateAction.class) ${table.entityName} ${table.name}) {
+        ${serviceVarName}.save(${table.name});
+    }
 
-@PostMapping
-public void updateById(@Validated(UpdateAction.class) ${table.entityName} ${table.name}){
-    ${serviceVarName}.updateById(${table.name});
-        }
+    @PostMapping
+    public void updateById(@Validated(UpdateAction.class) ${table.entityName} ${table.name}) {
+        ${serviceVarName}.updateById(${table.name});
+    }
 
-@DeleteMapping("{id}")
-public void deleteById(@PathVariable String id){
-    ${serviceVarName}.removeById(id);
-        }
-        }
-#end
+    @DeleteMapping("{id}")
+    public void deleteById(@PathVariable String id) {
+        ${serviceVarName}.removeById(id);
+    }
+}

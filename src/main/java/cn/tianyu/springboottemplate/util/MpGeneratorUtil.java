@@ -3,14 +3,13 @@ package cn.tianyu.springboottemplate.util;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * 代码生成器
@@ -23,7 +22,8 @@ public class MpGeneratorUtil {
 
     private static final String AUTHOR = "汪继友";
     // 默认使用当前包名
-    private static final String PACKAGE = MpGeneratorUtil.class.getPackage().getName();
+    private static final String CURR_PACKAGE = MpGeneratorUtil.class.getPackage().getName();
+    private static final String PACKAGE = CURR_PACKAGE.substring(0, CURR_PACKAGE.lastIndexOf('.'));
     // 选择要扫描的表
     private static final String[] TABLES = {"user"};
 
@@ -93,12 +93,22 @@ public class MpGeneratorUtil {
                 }
             }
         };
+        // 自定义xml生成的位置
+        List<FileOutConfig> list = new ArrayList<>();
+        list.add(new FileOutConfig("/templates/mapper.xml.vm") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return projectPath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
+            }
+        });
+        cfg.setFileOutConfigList(list);
         generator.setCfg(cfg);
 
         // 配置模板
         // 默认使用templates下的对应模板
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setServiceImpl(null);
+        templateConfig.setXml(null);
         generator.setTemplate(templateConfig);
 
         // 策略配置
