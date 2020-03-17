@@ -1,0 +1,9 @@
+package ${package};
+
+/**
+ * 包含CreateAction以及UpdateAction
+ *
+ * 主要区别新增/修改时的数据校验
+ */
+public interface ${action}Action {
+}

@@ -1,0 +1,63 @@
+package ${package.Controller};
+
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import ${package.Controller}.action.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.RestController;
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@RestController
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@Validated
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+#set($serviceVarName = ${table.name}+"Service")
+private final ${table.serviceName} ${serviceVarName};
+
+public ${table.controllerName}(${table.serviceName} ${serviceVarName}){
+        this.${serviceVarName} = ${serviceVarName};
+        }
+
+@GetMapping("list")
+public List<${table.entityName}> list(){
+        return ${serviceVarName}.list();
+        }
+
+@GetMapping("{id}")
+public ${table.entityName} getById(@PathVariable String id){
+        return ${serviceVarName}.getById(id);
+        }
+
+@PutMapping
+public void create(@Validated(CreateAction.class) ${table.entityName} ${table.name}){
+    ${serviceVarName}.save(${table.name});
+        }
+
+@PostMapping
+public void updateById(@Validated(UpdateAction.class) ${table.entityName} ${table.name}){
+    ${serviceVarName}.updateById(${table.name});
+        }
+
+@DeleteMapping("{id}")
+public void deleteById(@PathVariable String id){
+    ${serviceVarName}.removeById(id);
+        }
+        }
+#end
