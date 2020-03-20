@@ -17,20 +17,32 @@
     <properties>
         <java.version>1.8</java.version>
         <swagger.version>2.9.2</swagger.version>
+        <fastjson.version>1.2.66</fastjson.version>
+        <mariadb.version>2.5.4</mariadb.version>
+        <knife4j.version>1.9.6</knife4j.version>
+        <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
+        <velocity.version>2.2</velocity.version>
+        <shiro.version>1.4.2</shiro.version>
     </properties>
 
     <dependencies>
+        <!--spring-shiro-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
         <!-- 阿里json转换库 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.66</version>
+            <version>${fastjson.version}</version>
         </dependency>
         <!-- 数据库驱动mariadb mysql -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>2.5.4</version>
+            <version>${mariadb.version}</version>
         </dependency>
 
         <!--swagger-->
@@ -44,24 +56,29 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
 
         <!--mybatis plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.1.tmp</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
         <!--mybatis plus generator-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.1.tmp</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
         <!--模板引擎，mp generator需要-->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
-            <version>2.2</version>
+            <version>${velocity.version}</version>
         </dependency>
 
         <dependency>
@@ -84,6 +101,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

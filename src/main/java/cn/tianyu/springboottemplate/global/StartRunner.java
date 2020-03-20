@@ -25,6 +25,7 @@ public class StartRunner implements ApplicationRunner {
         String apiUrl = String.format("http://%s:%s%s", IpUtil.getMachineIP(), serverPort, serverPath);
 
         log.info("application started at                {}", apiUrl);
+        log.info("application swagger started at        {}/doc.html", apiUrl);
         log.info("application swagger started at        {}/swagger-ui.html", apiUrl);
     }
 }
