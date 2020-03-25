@@ -57,13 +57,13 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mp.version}</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
         <!--mybatis plus generator-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mp.version}</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
         <!--模板引擎，mp generator需要-->
         <dependency>
