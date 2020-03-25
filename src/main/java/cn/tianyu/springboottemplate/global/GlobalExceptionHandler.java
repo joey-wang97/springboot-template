@@ -1,7 +1,7 @@
-package cn.tianyu.blogapi.global;
+package cn.tianyu.springboottemplate.global;
 
-import cn.tianyu.blogapi.exception.BusinessException;
-import cn.tianyu.blogapi.util.TResult;
+import cn.tianyu.springboottemplate.exception.BusinessException;
+import cn.tianyu.springboottemplate.util.TResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;

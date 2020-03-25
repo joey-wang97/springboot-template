@@ -16,13 +16,15 @@ import org.springframework.stereotype.Component;
 public class ShiroRealm extends AuthorizingRealm {
 
     /**
-     * shiro将 AuthenticationToken和AuthenticationInfo进行对比，作为登录
-     * 所以将admin的正确信息传递到AuthenticationInfo里
+     * shiro将 AuthenticationToken和AuthenticationInfo进行对比，作为登录动作
+     * 所以将user的正确信息传递到AuthenticationInfo里
      * 登录验证
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        return new SimpleAuthenticationInfo("admin", "admin", "admin_realm");
+        //TODO 根据token获取username和pwd
+        String username = "admin", pwd = "pwd";
+        return new SimpleAuthenticationInfo(username, pwd, "my_realm");
     }
 
     /**
@@ -32,7 +34,8 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         log.info("principal {}", principalCollection);
         SimpleAuthorizationInfo res = new SimpleAuthorizationInfo();
-        res.addRole("admin");
+        // TODO 根据authorizationInfo获取角色
+        res.addRole("test_role");
         return res;
     }
 }

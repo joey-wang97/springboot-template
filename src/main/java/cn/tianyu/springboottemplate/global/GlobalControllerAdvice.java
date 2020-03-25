@@ -1,7 +1,7 @@
 package cn.tianyu.blogapi.global;
 
-import cn.tianyu.blogapi.util.TResult;
-import com.google.gson.Gson;
+import cn.tianyu.springboottemplate.util.TResult;
+import com.alibaba.fastjson.JSON;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
@@ -33,8 +33,8 @@ public class GlobalControllerAdvice implements ResponseBodyAdvice {
         //    而这个Convert只接收String类型的参数，所以直接传递TResult类，Convert处理时会出错，所以这里再将TResult转换为String
         // (2)另外一种解决方案是重写StringMessageConvert或添加自己的Convert
         if (o instanceof String) {
-            Gson gson = new Gson();
-            return gson.toJson(result);
+            serverHttpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+            return JSON.toJSONString(result);
         }
 
         return result;

@@ -1,6 +1,6 @@
-package cn.tianyu.blogapi.global;
+package cn.tianyu.springboottemplate.global;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -46,15 +46,14 @@ public class RestControllerAspect {
     public Object apiLog(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Gson gson = new Gson();
 
         log.info("********* api log *********");
         log.info("url: " + request.getMethod() + " " + request.getRequestURI());
         log.info("method: " + joinPoint.getSignature().toString());
         log.info("sessionid: " + request.getSession().getId());
         // 去除敏感字段后的parameter map
-        log.info("parameter map: " + gson.toJson(deleteSensitiveContent(request.getParameterMap())));
-        log.info("args: " + gson.toJson(joinPoint.getArgs()));
+        log.info("parameter map: " + JSON.toJSONString(deleteSensitiveContent(request.getParameterMap())));
+        log.info("args: " + JSON.toJSONString(joinPoint.getArgs()));
         log.info("user-agent: " + request.getHeader("user-agent"));
         log.info("remote ip: " + request.getRemoteAddr() + ", port: " + request.getRemotePort());
         log.info("request time: " + DateFormat.getDateTimeInstance().format(new Date()));

@@ -1,6 +1,5 @@
 package cn.tianyu.springboottemplate.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +30,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title(convert(name)).description(convert(description)).version(version).build();
+        return new ApiInfoBuilder().title(title).description(description).version(version).build();
     }
 
     /**
