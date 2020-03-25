@@ -16,46 +16,50 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <swagger.version>2.9.2</swagger.version>
+        <knife4j.version>2.0.2</knife4j.version>
+        <!--mybatis plus version-->
+        <mp.version>3.3.1.tmp</mp.version>
     </properties>
 
     <dependencies>
+        <!--spring-shiro-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+
         <!-- 阿里json转换库 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.66</version>
         </dependency>
-        <!-- 数据库驱动mariadb mysql -->
+        <!-- 数据库驱动mariadb -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>2.5.4</version>
         </dependency>
 
-        <!--swagger-->
+        <!--knife4j swagger-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
         </dependency>
 
         <!--mybatis plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.1.tmp</version>
+            <version>${mp.version}</version>
         </dependency>
         <!--mybatis plus generator-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.1.tmp</version>
+            <version>${mp.version}</version>
         </dependency>
         <!--模板引擎，mp generator需要-->
         <dependency>

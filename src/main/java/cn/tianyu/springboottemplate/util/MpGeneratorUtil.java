@@ -1,15 +1,13 @@
 package cn.tianyu.springboottemplate.util;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
-import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * 代码生成器
@@ -49,7 +47,7 @@ public class MpGeneratorUtil {
         gc.setAuthor(AUTHOR);
         gc.setOpen(false);
         // entity使用swagger2进行注解
-        // gc.setSwagger2(true);
+        gc.setSwagger2(true);
         gc.setBaseResultMap(true);
         // 取消Service的前缀 I
         gc.setServiceName("%sService");
@@ -68,31 +66,6 @@ public class MpGeneratorUtil {
         pc.setParent(PACKAGE);
         generator.setPackageInfo(pc);
 
-        // 自定义配置，这里用来添加自定义文件CreateAction.class和UpdateAction.class
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                String actionDir = getConfig().getPathInfo().get(ConstVal.CONTROLLER_PATH) + "/action/";
-                Map<String, Object> map = new HashMap<>();
-                map.put("package", getConfig().getPackageInfo().get(ConstVal.CONTROLLER) + ".action");
-
-                // 生成action
-                for (String actionName : new String[]{"Update", "Create"}) {
-                    map.put("action", actionName);
-                    try {
-                        // 使用mybatis模板引擎，初始化模板
-                        AbstractTemplateEngine templateEngine = new VelocityTemplateEngine().init(null);
-                        String outputFile = actionDir + actionName + "Action.java";
-                        File file = new File(outputFile);
-                        if (!file.exists()) file.getParentFile().mkdirs();
-                        templateEngine.writer(map, templateEngine.templateFilePath("templates/action.java"),
-                                outputFile);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
         // 自定义xml生成的位置
         List<FileOutConfig> list = new ArrayList<>();
         list.add(new FileOutConfig("/templates/mapper.xml.vm") {
@@ -101,8 +74,6 @@ public class MpGeneratorUtil {
                 return projectPath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
-        cfg.setFileOutConfigList(list);
-        generator.setCfg(cfg);
 
         // 配置模板
         // 默认使用templates下的对应模板
