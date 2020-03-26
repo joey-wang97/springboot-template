@@ -1,6 +1,7 @@
-package cn.tianyu.springboottemplate.util;
+package cn.siccs.sxyp.wxmp.util;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -19,11 +20,11 @@ import java.util.ResourceBundle;
 public class MpGeneratorUtil {
 
     private static final String AUTHOR = "汪继友";
+    //TODO 修改module
+    public static final String MODULE = "wxminiapp";
     // 默认使用当前包名
     private static final String CURR_PACKAGE = MpGeneratorUtil.class.getPackage().getName();
     private static final String PACKAGE = CURR_PACKAGE.substring(0, CURR_PACKAGE.lastIndexOf('.'));
-    // 选择要扫描的表
-    private static final String[] TABLES = {"user"};
 
     private static String username, password, url, driverClassName;
 
@@ -33,7 +34,7 @@ public class MpGeneratorUtil {
         username = bundle.getString("spring.datasource.username");
         password = bundle.getString("spring.datasource.password");
         url = bundle.getString("spring.datasource.url");
-        driverClassName = bundle.getString("spring.datasource.driverClassName");
+        driverClassName = bundle.getString("spring.datasource.driver-class-name");
     }
 
     public static void main(String[] args) {
@@ -42,8 +43,11 @@ public class MpGeneratorUtil {
         initDataSource();
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
+        String baseOutputDir = System.getProperty("user.dir");
+        if (MODULE != null && !MODULE.isEmpty()) {
+            baseOutputDir += "/" + MODULE;
+        }
+        gc.setOutputDir(baseOutputDir + "/src/main/java");
         gc.setAuthor(AUTHOR);
         gc.setOpen(false);
         // entity使用swagger2进行注解
@@ -66,14 +70,24 @@ public class MpGeneratorUtil {
         pc.setParent(PACKAGE);
         generator.setPackageInfo(pc);
 
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+
+            }
+        };
         // 自定义xml生成的位置
         List<FileOutConfig> list = new ArrayList<>();
+        String finalBaseOutputDir = baseOutputDir;
         list.add(new FileOutConfig("/templates/mapper.xml.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
+                return finalBaseOutputDir + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
+        cfg.setFileOutConfigList(list);
+        generator.setCfg(cfg);
 
         // 配置模板
         // 默认使用templates下的对应模板
@@ -88,7 +102,6 @@ public class MpGeneratorUtil {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setInclude(TABLES);
         strategy.setControllerMappingHyphenStyle(true);
         generator.setStrategy(strategy);
         generator.execute();
