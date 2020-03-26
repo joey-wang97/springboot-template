@@ -25,7 +25,7 @@ import ${superControllerClassPackage};
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 @Validated
 @Slf4j
-@Api("generated controller")
+@Api
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass} {
 #else
