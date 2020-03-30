@@ -38,8 +38,6 @@ public class SwaggerConfig {
      * 项目中配置从pom中读取swagger配置
      * spring读取配置文件默认采用ISO8895编码，但pom中为UTF8编码，使用此方法进行转换
      *
-     * @param text
-     * @return
      */
     private String convert(String text) {
         return new String(text.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);

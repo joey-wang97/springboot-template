@@ -1,4 +1,4 @@
-package cn.siccs.sxyp.wxmp.util;
+package cn.tianyu.springboottemplate.util;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -21,7 +21,7 @@ public class MpGeneratorUtil {
 
     private static final String AUTHOR = "汪继友";
     //TODO 修改module
-    public static final String MODULE = "wxminiapp";
+    public static final String MODULE = "";
     // 默认使用当前包名
     private static final String CURR_PACKAGE = MpGeneratorUtil.class.getPackage().getName();
     private static final String PACKAGE = CURR_PACKAGE.substring(0, CURR_PACKAGE.lastIndexOf('.'));
@@ -74,7 +74,6 @@ public class MpGeneratorUtil {
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
-
             }
         };
         // 自定义xml生成的位置
