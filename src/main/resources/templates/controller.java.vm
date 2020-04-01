@@ -52,13 +52,13 @@ public class ${table.controllerName} {
     }
 
     @ApiOperation("create")
-    @PutMapping
+    @PostMapping
     public void create(@Validated(CreateAction.class) ${table.entityName} ${table.name}) {
         ${serviceVarName}.save(${table.name});
     }
 
     @ApiOperation("update")
-    @PostMapping
+    @PutMapping
     public void updateById(@Validated(UpdateAction.class) ${table.entityName} ${table.name}) {
         ${serviceVarName}.updateById(${table.name});
     }
