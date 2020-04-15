@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class MpGeneratorUtil {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String baseOutputDir = System.getProperty("user.dir");
-        if (MODULE != null && !MODULE.isEmpty()) {
+        if (StringUtils.isNotBlank(MODULE)) {
             baseOutputDir += "/" + MODULE;
         }
         gc.setOutputDir(baseOutputDir + "/src/main/java");
