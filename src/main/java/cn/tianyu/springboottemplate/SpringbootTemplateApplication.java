@@ -6,31 +6,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Slf4j
 @SpringBootApplication
 @MapperScan("cn.tianyu.springboottemplate.mapper")
-@Slf4j
 public class SpringbootTemplateApplication extends SpringBootServletInitializer implements WebMvcConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootTemplateApplication.class, args);
-    }
-
-    /**
-     * 配置跨域请求，前端debug时需要用到
-     * 即使在拦截器里配置，这里还是需要配置，有时不是所有请求都经过拦截器的
-     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowCredentials(true)
-                .allowedOrigins("*")
-                .allowedMethods("*")
-                .allowedHeaders("*");
     }
 
     @Override
@@ -38,11 +23,24 @@ public class SpringbootTemplateApplication extends SpringBootServletInitializer 
         return application.sources(SpringbootTemplateApplication.class);
     }
 
+
     /**
-     * 为所有的RestController添加前缀
+     * 跨域访问配置
      */
     @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix("api", c -> c.isAnnotationPresent(RestController.class));
+    public void addCorsMappings(CorsRegistry registry) {
+        // 设置允许跨域的路径
+        registry.addMapping("/**")
+                // 设置允许跨域请求的域名
+                .allowedOrigins("*")
+                // 是否允许证书
+                .allowCredentials(true)
+                // 设置允许的方法
+                .allowedMethods("*")
+                // 设置允许的header属性
+                .allowedHeaders("*")
+                // 跨域允许时间
+                .maxAge(3600);
     }
+
 }

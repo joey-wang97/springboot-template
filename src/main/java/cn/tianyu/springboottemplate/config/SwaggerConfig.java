@@ -1,10 +1,12 @@
 package cn.tianyu.springboottemplate.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.google.common.base.Predicates;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -27,7 +29,10 @@ public class SwaggerConfig {
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo());
+                .apiInfo(apiInfo())
+                .select()
+                .paths(Predicates.not(PathSelectors.regex("/error")))
+                .build();
     }
 
     private ApiInfo apiInfo() {
@@ -37,7 +42,6 @@ public class SwaggerConfig {
     /**
      * 项目中配置从pom中读取swagger配置
      * spring读取配置文件默认采用ISO8895编码，但pom中为UTF8编码，使用此方法进行转换
-     *
      */
     private String convert(String text) {
         return new String(text.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);

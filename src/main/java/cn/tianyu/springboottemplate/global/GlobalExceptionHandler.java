@@ -2,6 +2,7 @@ package cn.tianyu.springboottemplate.global;
 
 import cn.tianyu.springboottemplate.exception.BusinessException;
 import cn.tianyu.springboottemplate.util.TResult;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
+import java.util.Date;
 
 /**
  * @author 天宇
@@ -25,8 +27,13 @@ import javax.validation.ConstraintViolationException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public TResult handleException(HttpServletRequest req, Exception e) {
+    public TResult handleException(HttpServletRequest request, Exception e) {
         log.error(e.getMessage());
+        log.error("系统发生异常: {}", e.getMessage());
+        log.error("********* request error log *********");
+        log.error("request uri: " + request.getMethod() + " " + request.getRequestURI());
+        log.error("parameter map: " + JSON.toJSONString(request.getParameterMap()));
+        log.error("request time: " + new Date());
         e.printStackTrace();
         return TResult.failure(e.getMessage());
     }

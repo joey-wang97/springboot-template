@@ -3,12 +3,16 @@ package cn.tianyu.springboottemplate.shiro;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
-import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
-import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.Filter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * jwt中直接保存了用户权限信息，所以不需要缓存
@@ -17,17 +21,42 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class ShiroConfig {
 
-    @Bean
-    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
-        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+    /**
+     * 配置shiro realm
+     */
 
-        // 这里没有配置任何路径限制，所有权限管理都是在controller中进行的配置
-        chainDefinition.addPathDefinition("/**", "anon");
-        return chainDefinition;
+    @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+
+        // 设置自定义filter
+        final String jwtFilterKey = "jwt";
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
+        filterMap.put(jwtFilterKey, new JwtFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
+
+        // 设置路径访问权限
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+
+        // 排除swagger
+        filterChainDefinitionMap.put("/swagger**/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
+        filterChainDefinitionMap.put("/v2/**", "anon");
+        filterChainDefinitionMap.put("/doc.html", "anon");
+
+        // 排除登录接口
+        filterChainDefinitionMap.put("/user/login", "anon");
+
+        // 所有请求都经过
+        filterChainDefinitionMap.put("/**", jwtFilterKey);
+
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        return shiroFilterFactoryBean;
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(ShiroRealm myRealm) {
+    public SecurityManager securityManager(ShiroRealm myRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(myRealm);
 

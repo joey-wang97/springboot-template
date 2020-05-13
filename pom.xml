@@ -49,9 +49,35 @@
         <velocity.version>2.2</velocity.version>
         <shiro.version>1.4.2</shiro.version>
         <knife4j.version>2.0.2</knife4j.version>
+        <jwt.version>0.10.5</jwt.version>
+        <hutool.version>5.3.4</hutool.version>
     </properties>
 
     <dependencies>
+        <!--java tool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!--jjwt 默认使用它进行json序列转化-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <!--spring-shiro-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -132,6 +158,10 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 
