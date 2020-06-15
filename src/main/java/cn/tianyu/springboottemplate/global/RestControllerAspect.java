@@ -1,5 +1,8 @@
 package cn.tianyu.springboottemplate.global;
 
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentParser;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,12 +13,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author 天宇
@@ -44,38 +48,27 @@ public class RestControllerAspect {
      */
     @Around("@within(org.springframework.web.bind.annotation.RestController) ")
     public Object apiLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
-        log.info("********* api log *********");
-        log.info("url: " + request.getMethod() + " " + request.getRequestURI());
-        log.info("method: " + joinPoint.getSignature().toString());
-        log.info("sessionid: " + request.getSession().getId());
+        String className = joinPoint.getSignature().getDeclaringTypeName();
+        String classMethod = joinPoint.getSignature().getName();
+        String ip = ServletUtil.getClientIP(request);
+        UserAgent agent = UserAgentParser.parse(request.getHeader("user-agent"));
+
+        // 打印日志
+        log.info("********* request log *********");
+        log.info("http method: {} {}", request.getMethod(), request.getRequestURI());
+        log.info("class method: {} {}", className, classMethod);
         // 去除敏感字段后的parameter map
-        log.info("parameter map: " + JSON.toJSONString(deleteSensitiveContent(request.getParameterMap())));
-        log.info("args: " + JSON.toJSONString(joinPoint.getArgs()));
-        log.info("user-agent: " + request.getHeader("user-agent"));
-        log.info("remote ip: " + request.getRemoteAddr() + ", port: " + request.getRemotePort());
-        log.info("request time: " + DateFormat.getDateTimeInstance().format(new Date()));
-        return joinPoint.proceed();
-    }
+        // log.info("parameter map: " + JSON.toJSONString(deleteSensitiveContent(request.getParameterMap())));
+        // 过滤掉HttpServletRequest相关参数，因为序列化时，json会尝试获取request上下文，造成异常
+        List<Object> args = Arrays.stream(joinPoint.getArgs()).filter(arg -> (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse)))
+                .collect(Collectors.toList());
+        String jsonArgs = JSON.toJSONString(args);
+        log.info("args: " + jsonArgs);
+        log.info("remote ip: " + ip);
+        log.info("request time: " + LocalDateTime.now());
 
-    /**
-     * 删除参数中的敏感内容
-     *
-     * @return 去除敏感内容后的参数对象
-     */
-    private Map<String, String[]> deleteSensitiveContent(Map<String, String[]> parameterMap) {
-        HashMap<String, String[]> resMap = new HashMap<>(16);
-        resMap.putAll(parameterMap);
-        resMap.forEach((key, value) -> {
-            for (String sensitiveField : sensitiveFieldArray) {
-                if (containIgnoreCase(key, sensitiveField)) {
-                    resMap.put(key, new String[]{"******"});
-                    break;
-                }
-            }
-        });
-        return resMap;
+        return joinPoint.proceed();
     }
 }

@@ -25,6 +25,7 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
+
     <!-- 生产环境的滚动info日志 -->
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
@@ -76,16 +77,10 @@
         </filter>
     </appender>
 
-    <!--不拦截spring的一部分调试信息-->
-    <!--<logger name="springfox.documentation.spring.web" level="OFF"/>-->
-
     <root level="info">
-        <appender-ref ref="CONSOLE"/>
-        <!--非调试模式时，使用logback，调试模式直接打印到控制台，不输出到文件-->
-        <springProfile name="!dev">
-            <appender-ref ref="INFO_FILE"/>
-            <appender-ref ref="ERROR_FILE"/>
-        </springProfile>
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
     </root>
 
 </configuration>

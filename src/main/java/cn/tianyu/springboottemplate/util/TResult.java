@@ -64,7 +64,9 @@ public class TResult {
     public enum TResultCode {
         /* 成功状态码 */
         SUCCESS(1, "成功"),
+
         FAILURE(2, "失败"),
+        KICK_OUT(3, "您已在别处登录"),
 
         /* 参数错误：10001-19999 */
         PARAM_IS_INVALID(10001, "参数无效"),
@@ -85,7 +87,8 @@ public class TResult {
         SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
 
         /* 数据错误：50001-599999 */
-        RESULE_DATA_NONE(50001, "数据未找到"),
+        DATA_NONE(50001, "数据不存在"),
+        DATA_IS_DELETED(50001, "数据已删除，请先恢复"),
         DATA_IS_WRONG(50002, "数据有误"),
         DATA_ALREADY_EXISTED(50003, "数据已存在"),
 
