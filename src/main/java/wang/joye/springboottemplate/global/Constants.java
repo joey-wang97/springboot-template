@@ -6,5 +6,6 @@ package wang.joye.springboottemplate.global;
 public interface Constants {
 
     String AUTHORIZATION = "Authorization";
-    String USER_ID = "userId";
+    String JWT_PREFIX = "Bearer ";
+    String ADMIN_ID = "adminId";
 }
