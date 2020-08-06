@@ -5,27 +5,6 @@
     <!-- 使用 ${} 访问变量。 -->
     <property name="log.path" value="log/template"/>
 
-    <!-- 彩色日志依赖的渲染类 -->
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
-    <conversionRule conversionWord="wex"
-                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
-    <conversionRule conversionWord="wEx"
-                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
-    <!-- 彩色日志格式 -->
-    <property name="CONSOLE_LOG_PATTERN"
-              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-
-    <!--输出到控制台-->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>debug</level>
-        </filter>
-        <encoder>
-            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
     <!-- 生产环境的滚动info日志 -->
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
@@ -78,7 +57,6 @@
     </appender>
 
     <root level="info">
-        <!--<appender-ref ref="CONSOLE"/>-->
         <appender-ref ref="INFO_FILE"/>
         <appender-ref ref="ERROR_FILE"/>
     </root>

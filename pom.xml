@@ -8,7 +8,7 @@
         <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cn.tianyu</groupId>
+    <groupId>wang.joye</groupId>
     <artifactId>springboot-template</artifactId>
     <version>0.1</version>
     <name>springboot-template</name>

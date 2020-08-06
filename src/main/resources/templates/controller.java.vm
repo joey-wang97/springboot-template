@@ -11,7 +11,8 @@ import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.validation.groups.Default;
+
 #if(${superControllerClassPackage})
 import ${superControllerClassPackage};
 #end
@@ -26,11 +27,7 @@ import ${superControllerClassPackage};
 @Validated
 @Slf4j
 @Api
-#if(${superControllerClass})
-public class ${table.controllerName} extends ${superControllerClass} {
-#else
 public class ${table.controllerName} {
-#end
 
     #set($serviceVarName = ${table.name}+"Service")
     private final ${table.serviceName} ${serviceVarName};
@@ -53,13 +50,13 @@ public class ${table.controllerName} {
 
     @ApiOperation("create")
     @PostMapping
-    public void create(@Validated(CreateAction.class) ${table.entityName} ${table.name}) {
+    public void create(@Validated({CreateAction.class, Default.class}) @RequestBody ${table.entityName} ${table.name}) {
         ${serviceVarName}.save(${table.name});
     }
 
     @ApiOperation("update")
     @PutMapping
-    public void updateById(@Validated(UpdateAction.class) ${table.entityName} ${table.name}) {
+    public void updateById(@Validated({UpdateAction.class, Default.class}) @RequestBody ${table.entityName} ${table.name}) {
         ${serviceVarName}.updateById(${table.name});
     }
 
