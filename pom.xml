@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.5.RELEASE</version>
+        <version>2.3.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>wang.joye</groupId>
@@ -45,9 +45,8 @@
         <java.version>1.8</java.version>
         <fastjson.version>1.2.66</fastjson.version>
         <mariadb.version>2.5.4</mariadb.version>
-        <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <velocity.version>2.2</velocity.version>
-        <shiro.version>1.5.3</shiro.version>
         <knife4j.version>2.0.2</knife4j.version>
         <jwt.version>0.10.5</jwt.version>
         <hutool.version>5.3.4</hutool.version>
@@ -77,12 +76,6 @@
             <artifactId>jjwt-impl</artifactId>
             <version>${jwt.version}</version>
             <scope>runtime</scope>
-        </dependency>
-        <!--spring-shiro-->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring-boot-web-starter</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <!-- 阿里json转换库 -->
         <dependency>
@@ -140,13 +133,13 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

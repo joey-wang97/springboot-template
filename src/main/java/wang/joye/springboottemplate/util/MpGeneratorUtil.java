@@ -25,6 +25,8 @@ public class MpGeneratorUtil {
     // 默认使用当前包名
     private static final String CURR_PACKAGE = MpGeneratorUtil.class.getPackage().getName();
     private static final String PACKAGE = CURR_PACKAGE.substring(0, CURR_PACKAGE.lastIndexOf('.'));
+    // 要生成的表
+    private static final String[] TABLES = {};
 
     private static String username, password, url, driverClassName;
 
@@ -103,6 +105,9 @@ public class MpGeneratorUtil {
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setControllerMappingHyphenStyle(true);
+        // 如果不指定表，默认生成全部表
+        if (TABLES.length > 0)
+            strategy.setInclude(TABLES);
         generator.setStrategy(strategy);
         generator.execute();
     }
