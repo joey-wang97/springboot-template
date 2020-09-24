@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
 import lombok.Data;
-import lombok.experimental.Accessors;
 #end
 
 /**
@@ -20,7 +19,6 @@ import lombok.experimental.Accessors;
  */
 #if(${entityLombokModel})
 @Data
-@Accessors(chain = true)
 #end
 #if(${table.convert})
 @TableName("${table.name}")

@@ -47,7 +47,7 @@
         <mariadb.version>2.5.4</mariadb.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <velocity.version>2.2</velocity.version>
-        <knife4j.version>2.0.2</knife4j.version>
+        <knife4j.version>2.0.5</knife4j.version>
         <jwt.version>0.10.5</jwt.version>
         <hutool.version>5.3.4</hutool.version>
     </properties>
@@ -163,6 +163,7 @@
     </dependencies>
 
     <build>
+        <finalName>springboot-template</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -30,6 +30,6 @@ public class StartRunner implements ApplicationRunner {
                 , serverPort, serverPath);
 
         log.info("application swagger started at    {}/doc.html#/plus", apiUrl);
-        log.info("application sxyp-mall start successful!");
+        log.info("application start successful!");
     }
 }

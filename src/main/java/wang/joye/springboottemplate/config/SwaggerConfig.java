@@ -32,6 +32,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .paths(Predicates.not(PathSelectors.regex("/error")))
+                .paths(Predicates.not(PathSelectors.regex("/actuator.*")))
                 .build();
     }
 

@@ -3,7 +3,7 @@
 <configuration scan="true">
     <contextName>logback</contextName>
     <!-- 使用 ${} 访问变量。 -->
-    <property name="log.path" value="log/template"/>
+    <property name="log.path" value="logs/template"/>
 
     <!-- 生产环境的滚动info日志 -->
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
