@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -29,15 +27,6 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class RestControllerAspect {
-
-    // 敏感字段列表
-    private String[] sensitiveFieldArray = {"pwd", "password"};
-
-    public static boolean containIgnoreCase(String input, String regex) {
-        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(input);
-        return m.find();
-    }
 
     /**
      * 环绕通知

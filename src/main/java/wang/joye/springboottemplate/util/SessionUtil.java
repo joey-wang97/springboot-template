@@ -1,8 +1,8 @@
 package wang.joye.springboottemplate.util;
 
 
+import wang.joye.springboottemplate.constant.TConstants;
 import wang.joye.springboottemplate.exception.BusinessException;
-import wang.joye.springboottemplate.global.Constants;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +22,7 @@ public class SessionUtil {
      * 从session中获取用户id
      */
     public static long getUserId(HttpSession session) {
-        check(session, Constants.ADMIN_ID);
-        return (long) session.getAttribute(Constants.ADMIN_ID);
+        check(session, TConstants.ADMIN_ID);
+        return (long) session.getAttribute(TConstants.ADMIN_ID);
     }
 }

@@ -68,6 +68,8 @@ public class TResult {
 
         FAILURE(2, "失败"),
         KICK_OUT(3, "您已在别处登录"),
+        EXPIRED_TOKEN(3, "token已过期，请重新登录"),
+        INVALID_TOKEN(3, "token无效"),
 
         /* 参数错误：10001-19999 */
         PARAM_IS_INVALID(10001, "参数无效"),
@@ -85,7 +87,8 @@ public class TResult {
         BUSINESS_ERROR(30001, "某业务出现问题"),
 
         /* 系统错误：40001-49999 */
-        SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
+        SYSTEM_INNER_ERROR(40001, "系统繁忙，请联系管理员"),
+        SYSTEM_DB_ERROR(40002, "数据库繁忙，请联系管理员"),
 
         /* 数据错误：50001-599999 */
         DATA_NONE(50001, "数据不存在"),

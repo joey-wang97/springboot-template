@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import wang.joye.springboottemplate.constant.TConstants;
 import wang.joye.springboottemplate.util.InterceptorUtil;
 import wang.joye.springboottemplate.util.JwtUtil;
 
@@ -33,17 +34,17 @@ public class GlobalInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        String header = request.getHeader(Constants.AUTHORIZATION);
-        if (StringUtils.isBlank(header) || header.length() <= Constants.JWT_PREFIX.length()) {
+        String header = request.getHeader(TConstants.AUTHORIZATION);
+        if (StringUtils.isBlank(header) || header.length() <= TConstants.JWT_PREFIX.length()) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "please specify the token");
             return false;
         }
 
-        String jwt = header.substring(Constants.JWT_PREFIX.length());
+        String jwt = header.substring(TConstants.JWT_PREFIX.length());
 
         try {
-            long adminId = JwtUtil.parse(jwt).get(Constants.ADMIN_ID, Long.class);
-            session.setAttribute(Constants.ADMIN_ID, adminId);
+            long adminId = JwtUtil.parse(jwt).get(TConstants.ADMIN_ID, Long.class);
+            session.setAttribute(TConstants.ADMIN_ID, adminId);
             return true;
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "token invalid");

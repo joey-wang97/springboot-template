@@ -29,7 +29,7 @@ public class StartRunner implements ApplicationRunner {
                 set.iterator().hasNext() ? set.iterator().next() : NetUtil.LOCAL_IP
                 , serverPort, serverPath);
 
-        log.info("application swagger started at    {}/doc.html#/plus", apiUrl);
+        log.info("application swagger started at    {}/doc.html#plus", apiUrl);
         log.info("application start successful!");
     }
 }

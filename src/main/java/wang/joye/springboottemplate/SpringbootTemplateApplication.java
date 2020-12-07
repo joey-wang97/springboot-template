@@ -30,7 +30,7 @@ public class SpringbootTemplateApplication extends SpringBootServletInitializer 
          * kill -9时，不会触发这段代码
          */
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            log.info("stop application successfully");
+            log.info("application has been stop!");
         }));
     }
 }
