@@ -17,4 +17,6 @@ public interface TConstants {
 
     int YES = 1;
     int NO = 0;
+
+    int REDIS_VALID_DAY = 15;
 }

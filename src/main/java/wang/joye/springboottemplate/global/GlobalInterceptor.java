@@ -42,14 +42,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
         String jwt = header.substring(TConstants.JWT_PREFIX.length());
 
-        try {
-            long adminId = JwtUtil.parse(jwt).get(TConstants.ADMIN_ID, Long.class);
-            session.setAttribute(TConstants.ADMIN_ID, adminId);
-            return true;
-        } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "token invalid");
-            return false;
-        }
+        long adminId = JwtUtil.parse(jwt).get(TConstants.ADMIN_ID, Long.class);
+        session.setAttribute(TConstants.ADMIN_ID, adminId);
+        return true;
     }
 
     @Override

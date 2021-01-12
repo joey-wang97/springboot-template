@@ -3,7 +3,7 @@ package wang.joye.springboottemplate.util;
 import com.alibaba.fastjson.JSON;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-import wang.joye.springboottemplate.common.constant.CommonConstants;
+import wang.joye.springboottemplate.constant.TConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class RedisUtil {
      * 存储非string对象时，转化为json格式
      */
     public void set(String key, Object value) {
-        set(key, value, CommonConstants.REDIS_VALID_DAY, TimeUnit.DAYS);
+        set(key, value, TConstants.REDIS_VALID_DAY, TimeUnit.DAYS);
     }
 
     /**

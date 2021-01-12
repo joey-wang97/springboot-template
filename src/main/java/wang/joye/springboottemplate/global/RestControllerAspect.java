@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -51,7 +52,10 @@ public class RestControllerAspect {
         // 去除敏感字段后的parameter map
         // log.info("parameter map: " + JSON.toJSONString(deleteSensitiveContent(request.getParameterMap())));
         // 过滤掉HttpServletRequest相关参数，因为序列化时，json会尝试获取request上下文，造成异常
-        List<Object> args = Arrays.stream(joinPoint.getArgs()).filter(arg -> (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse)))
+        // 过滤掉HttpServletRequest相关参数，因为序列化时，json会尝试获取request上下文，造成异常
+        List<Object> args = Arrays.stream(joinPoint.getArgs())
+                .filter(arg -> (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse))
+                        && !(arg instanceof InputStreamSource))
                 .collect(Collectors.toList());
         String jsonArgs = JSON.toJSONString(args);
         log.info("args: " + jsonArgs);

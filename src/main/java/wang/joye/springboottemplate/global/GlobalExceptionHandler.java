@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,9 +33,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public TResult handleException(HttpServletRequest request, Exception e) {
-        if (e instanceof SQLException) {
-            return handleSqlException(request, (SQLException) e);
-        }
         log.error("******** 系统发生异常********");
         log.error("request uri: " + request.getMethod() + " " + request.getRequestURI());
         log.error("parameter map: " + JSON.toJSONString(request.getParameterMap()));
@@ -53,8 +51,8 @@ public class GlobalExceptionHandler {
         return TResult.failure("数据库连接超时");
     }
 
-    @ExceptionHandler(SQLException.class)
-    public TResult handleSqlException(HttpServletRequest request, SQLException e) {
+    @ExceptionHandler({SQLException.class, BadSqlGrammarException.class})
+    public TResult handleSqlException(HttpServletRequest request, Exception e) {
         log.error("******** sql异常********\n" +
                 "request uri: {} {}\n" +
                 "parameter map: {}\n" +
