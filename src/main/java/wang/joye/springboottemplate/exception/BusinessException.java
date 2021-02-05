@@ -1,7 +1,7 @@
 package wang.joye.springboottemplate.exception;
 
-import wang.joye.springboottemplate.util.TResult;
 import lombok.Data;
+import wang.joye.springboottemplate.util.TResult;
 
 @Data
 public class BusinessException extends RuntimeException {
@@ -11,6 +11,7 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(String message) {
         super(message);
+        this.code = TResult.TResultCode.FAILURE.getCode();
     }
 
     public BusinessException(Object data) {

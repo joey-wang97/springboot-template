@@ -38,12 +38,12 @@ public class GlobalExceptionHandler {
         log.error("parameter map: " + JSON.toJSONString(request.getParameterMap()));
         log.error("request time: " + new Date());
         log.error("堆栈信息", e);
-        return TResult.failure(e.getMessage());
+        return TResult.failure(TResult.TResultCode.SYSTEM_INNER_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(TypeMismatchException.class)
     public TResult handleMethodArgumentTypeMismatchException(HttpServletRequest request, TypeMismatchException e) {
-        return TResult.failure(e.getMessage());
+        return TResult.failure(TResult.TResultCode.PARAM_TYPE_BIND_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(PersistenceException.class)
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
                 "request uri: {} {}\n" +
                 "parameter map: {}\n" +
                 "sql异常信息 ", request.getMethod(), request.getRequestURI(), JSON.toJSONString(request.getParameterMap()), e);
-        return TResult.failure(TResult.TResultCode.SYSTEM_DB_ERROR);
+        return TResult.failure(TResult.TResultCode.SYSTEM_DB_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(NullPointerException.class)
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
                 "request uri: {} {}\n" +
                 "parameter map: {}\n" +
                 "空指针异常 ", request.getMethod(), request.getRequestURI(), JSON.toJSONString(request.getParameterMap()), e);
-        return TResult.failure(TResult.TResultCode.SYSTEM_INNER_ERROR);
+        return TResult.failure(TResult.TResultCode.SYSTEM_INNER_ERROR, e.getMessage());
     }
 
     /**

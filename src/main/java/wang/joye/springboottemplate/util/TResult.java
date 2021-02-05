@@ -10,6 +10,7 @@ public class TResult {
 
     private Integer code;
     private String message;
+    private String detail;
     private Object data;
 
     public TResult() {
@@ -41,16 +42,24 @@ public class TResult {
         return result;
     }
 
+    public static TResult failure(String message, String detail) {
+        TResult result = new TResult();
+        result.setCode(TResultCode.FAILURE.getCode());
+        result.message = message;
+        result.detail = detail;
+        return result;
+    }
+
     public static TResult failure(TResultCode resultCode) {
         TResult result = new TResult();
         result.setResultCode(resultCode);
         return result;
     }
 
-    public static TResult failure(TResultCode resultCode, Object data) {
+    public static TResult failure(TResultCode resultCode, String detail) {
         TResult result = new TResult();
         result.setResultCode(resultCode);
-        result.setData(data);
+        result.setDetail(detail);
         return result;
     }
 

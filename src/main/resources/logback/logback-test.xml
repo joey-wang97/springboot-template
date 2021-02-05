@@ -5,6 +5,12 @@
     <!-- 使用 ${} 访问变量。 -->
     <property name="log.path" value="logs/template"/>
 
+    <appender name="CONSOLE-LOG" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%d{yyyy-MM-dd' 'HH:mm:ss.sss}] [%C] [%t] [%L] [%-5p] %m%n</pattern>
+        </layout>
+    </appender>
+
     <!-- 生产环境的滚动info日志 -->
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
@@ -59,6 +65,8 @@
     <root level="info">
         <appender-ref ref="INFO_FILE"/>
         <appender-ref ref="ERROR_FILE"/>
+        <!--不使用控制台日志-->
+        <!--<appender-ref ref="CONSOLE-"/>-->
     </root>
 
 </configuration>
